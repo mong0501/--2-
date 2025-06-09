@@ -121,3 +121,38 @@ void interact() {
     }
 }
 
+void produce_cp() {
+    int gain = (mood > 0 ? mood - 1 : 0) + intimacy;
+    cp += gain;
+    printf("CP %d 생산되었습니다. 총 CP: %d\n", gain, cp);
+}
+
+void shop() {
+    int choice;
+    while (1) {
+        printf("상점:\n0. 아무것도 안 삼\n");
+        if (!toy_mouse) printf("1. 장난감 쥐 (1 CP)\n");
+        if (!laser) printf("2. 레이저 포인터 (2 CP)\n");
+        if (!scratcher) printf("3. 스크래처 (4 CP)\n");
+        if (!cattower) printf("4. 캣 타워 (6 CP)\n");
+
+        scanf_s("%d", &choice);
+
+        if (choice == 0) break;
+        else if (choice == 1 && !toy_mouse && cp >= 1) {
+            toy_mouse = 1; cp -= 1; break;
+        }
+        else if (choice == 2 && !laser && cp >= 2) {
+            laser = 1; cp -= 2; break;
+        }
+        else if (choice == 3 && !scratcher && cp >= 4) {
+            scratcher = 1; cp -= 4; break;
+        }
+        else if (choice == 4 && !cattower && cp >= 6) {
+            cattower = 1; cp -= 6; break;
+        }
+        else {
+            printf("CP 부족 또는 이미 구매함. 다시 선택하세요.\n");
+        }
+    }
+}
