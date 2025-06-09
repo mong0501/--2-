@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <time.h>
 
-// 2-1 초기 구조 설정: 변수 및 상태 출력 함수 구현
 int soup = 0;
 int cp = 0;
 int mood = 3;
@@ -11,6 +10,10 @@ int turn = 0;
 
 int toy_mouse = 0, laser = 0, scratcher = 0, cattower = 0;
 char cat_pos = 'H';
+
+int roll_dice() {
+    return rand() % 6 + 1;
+}
 
 void print_status() {
     printf("==================== 현재 상태 =============\n");
@@ -30,9 +33,23 @@ void print_status() {
     else printf("천생연분입니다.\n");
     printf("============================================\n");
 }
+void print_room() {
+    char line1[17] = "#H   ?    ?  B#";
+    char line2[17] = "#             #";
 
-int roll_dice() {
-    return rand() % 6 + 1;
+    line1[5] = cattower ? 'T' : ' ';
+    line1[10] = scratcher ? 'S' : ' ';
+
+    for (int i = 0; i < 15; i++) {
+        if (line1[i] == cat_pos) {
+            line2[i] = 'C';
+        }
+    }
+
+    printf("###############\n");
+    printf("%s\n", line1);
+    printf("%s\n", line2);
+    printf("###############\n");
 }
 
 void decrease_mood() {
