@@ -171,3 +171,19 @@ void quest() {
     }
 }
 
+int main() {
+    srand((unsigned int)time(NULL));
+    while (1) {
+        turn++;
+        print_status();
+        decrease_mood();
+        move_cat();
+        act_on_location();
+        print_room();
+        interact();
+        produce_cp();
+        shop();
+        if (turn == 3) quest();
+    }
+    return 0;
+}
