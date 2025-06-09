@@ -88,4 +88,36 @@ void act_on_location() {
         soup++;
         printf("쫀떡이 수프를 만들었습니다! 총 수프: %d개\n", soup);
     }
-}   
+}
+void interact() {
+    int choice, dice;
+    printf("어떤 상호작용을 하시겠습니까?\n");
+    if (toy_mouse) printf("2. 장난감 쥐로 놀기\n");
+    printf("0. 아무것도 하지 않음\n1. 긁어 주기\n");
+    if (laser) printf("3. 레이저 포인터로 놀기\n");
+
+    do {
+        printf(">> ");
+        scanf_s("%d", &choice);
+    } while (choice < 0 || choice > 3);
+
+    dice = roll_dice();
+
+    if (choice == 0) {
+        if (mood > 0) mood--;
+        if (dice <= 5 && intimacy > 0) intimacy--;
+    }
+    else if (choice == 1) {
+        if (dice >= 5 && intimacy < 4) intimacy++;
+    }
+    else if (choice == 2 && toy_mouse) {
+        if (mood < 3) mood++;
+        if (dice >= 4 && intimacy < 4) intimacy++;
+    }
+    else if (choice == 3 && laser) {
+        mood += 2;
+        if (mood > 3) mood = 3;
+        if (dice >= 2 && intimacy < 4) intimacy++;
+    }
+}
+
