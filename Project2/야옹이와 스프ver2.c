@@ -156,3 +156,18 @@ void shop() {
         }
     }
 }
+
+void quest() {
+    int q;
+    printf("[돌발 퀘스트 발생!] 외출 준비물은?\n1. 간식\n2. 목줄\n3. 스프 재료\n>> ");
+    scanf_s("%d", &q);
+    if (q == 2 && intimacy < 4) {
+        intimacy++;
+        printf("쫀떡 외출 성공! 친밀도 +1\n");
+    }
+    else {
+        if (mood > 0) mood--;
+        printf("쫀떡 실망... 기분 -1\n");
+    }
+}
+
