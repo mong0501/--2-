@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 
+// 2-1 초기 구조 설정: 변수 및 상태 출력 함수 구현
 int soup = 0;
 int cp = 0;
 int mood = 3;
@@ -10,10 +11,6 @@ int turn = 0;
 
 int toy_mouse = 0, laser = 0, scratcher = 0, cattower = 0;
 char cat_pos = 'H';
-
-int roll_dice() {
-    return rand() % 6 + 1;
-}
 
 void print_status() {
     printf("==================== 현재 상태 =============\n");
@@ -34,6 +31,22 @@ void print_status() {
     printf("============================================\n");
 }
 
+int roll_dice() {
+    return rand() % 6 + 1;
+}
+
+void decrease_mood() {
+    int dice = roll_dice();
+    int threshold = 6 - intimacy;
+    printf("%d-%d: 주사위 눈이 %d이하이면 그냥 기분이 나빠집니다.\n", 6, intimacy, threshold);
+    printf("주사위를 굴립니다. 또르르...\n");
+    printf("%d이(가) 나왔습니다.\n", dice);
+    if (dice <= threshold && mood > 0) {
+        printf("쫀떡의 기분이 나빠집니다: %d -> %d\n", mood, mood - 1);
+        mood--;
+    }
+}
+
 void move_cat() {
     if (mood == 0) cat_pos = 'H';
     else if (mood == 1) {
@@ -42,3 +55,20 @@ void move_cat() {
     }
     else if (mood == 3) cat_pos = 'B';
 }
+
+void act_on_location() {
+    if (cat_pos == 'H') {
+        if (mood < 3) mood++;
+    }
+    else if (cat_pos == 'S' && scratcher) {
+        if (mood < 3) mood++;
+    }
+    else if (cat_pos == 'T' && cattower) {
+        mood += 2;
+        if (mood > 3) mood = 3;
+    }
+    else if (cat_pos == 'B' && mood == 3) {
+        soup++;
+        printf("쫀떡이 수프를 만들었습니다! 총 수프: %d개\n", soup);
+    }
+}   
