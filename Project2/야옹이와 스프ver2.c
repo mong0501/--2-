@@ -33,3 +33,18 @@ void print_status() {
     else printf("천생연분입니다.\n");
     printf("============================================\n");
 }
+int roll_dice() {
+    return rand() % 6 + 1;
+}
+
+void decrease_mood() {
+    int dice = roll_dice();
+    int threshold = 6 - intimacy;
+    printf("%d-%d: 주사위 눈이 %d이하이면 그냥 기분이 나빠집니다.\n", 6, intimacy, threshold);
+    printf("주사위를 굴립니다. 또르르...\n");
+    printf("%d이(가) 나왔습니다.\n", dice);
+    if (dice <= threshold && mood > 0) {
+        printf("쫀떡의 기분이 나빠집니다: %d -> %d\n", mood, mood - 1);
+        mood--;
+    }
+}
